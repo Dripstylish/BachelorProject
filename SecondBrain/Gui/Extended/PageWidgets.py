@@ -1,10 +1,10 @@
 import copy
 
-from PySide6.QtGui import QAction, QIcon, QKeySequence, QFont
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QLabel, QPushButton, QTextEdit
 
 from SecondBrain.Gui.Application import app, icon
-from SecondBrain.Gui.Extended import Widget, QBoxHorizontal, LayoutBoxHorizontal, Button
+from SecondBrain.Gui.Extended import Widget, QBoxHorizontal, Button
 from SecondBrain.client import client
 
 
@@ -39,14 +39,46 @@ class Page(Widget):
 class TextEditor(Widget):
     def __init__(self):
 
-        self.editor = QTextEdit()
-        self.editor.setViewportMargins(10, 10, 10, 10)
-        app.theme.change_placeholder_text_color(self.editor, app.theme.highlight_text_color)
-        self.editor.setPlaceholderText("Type here ...")
-
+        self.editor = TextEditorMainWindow()
         self.stylizer = TextEditorStylizer(self.editor)
+        self.editor.setStylizer(self.stylizer)
         
         super(TextEditor, self).__init__(children=[self.stylizer, self.editor])
+
+
+class TextEditorMainWindow(QTextEdit):
+    def __init__(self):
+        super(TextEditorMainWindow, self).__init__()
+
+        self.setViewportMargins(10, 10, 10, 10)
+        app.theme.change_placeholder_text_color(self, app.theme.highlight_text_color)
+        self.setPlaceholderText("Type here ...")
+
+        self.stylizer = None
+
+    def setStylizer(self, stylizer):
+        self.stylizer = stylizer
+
+    def mousePressEvent(self, e):
+        super(TextEditorMainWindow, self).mousePressEvent(e)
+
+        # check bold
+        if self.fontWeight() == QFont.Bold:
+            self.stylizer.bold_button.toggle_on()
+        else:
+            self.stylizer.bold_button.toggle_off()
+
+        # check italics
+        if self.fontItalic():
+            self.stylizer.italics_button.toggle_on()
+        else:
+            self.stylizer.italics_button.toggle_off()
+
+        # check underline
+        # if self.fontUnderline():
+        #     self.stylizer.underline_button.toggle_on()
+        # else:
+        #     self.stylizer.underline_button.toggle_off()
 
 
 class TextEditorStylizer(Widget):
@@ -56,11 +88,11 @@ class TextEditorStylizer(Widget):
 
         self.bold_button = StyleButton(icon=icon.fi_rr_bold, click_event=self.style_bold)
         self.italics_button = StyleButton(icon=icon.fi_rr_italic, click_event=self.style_italics)
-        self.underline_button = StyleButton(icon=icon.fi_rr_underline, click_event=self.style_underline)
+        #self.underline_button = StyleButton(icon=icon.fi_rr_underline, click_event=self.style_underline) # underline does not seem to work proper in pyside6 currently
 
         self.addWidget(self.bold_button)
         self.addWidget(self.italics_button)
-        self.addWidget(self.underline_button)
+        #self.addWidget(self.underline_button)
 
         self.addStretch()
 
@@ -78,9 +110,16 @@ class TextEditorStylizer(Widget):
 
     def style_underline(self):
         if self.italics_button.button_toggled:
-            self.editor.setFontUnderline(False)
+            font = QFont()
+            current_font = self.editor.currentFont()
+            if current_font.bold():
+                font.setBold(True)
+            if current_font.italic():
+                font.setItalic(True)
+            self.editor.setCurrentFont(font)
         else:
             self.editor.setFontUnderline(True)
+
 
 class StyleButton(Button):
     def __init__(self, text=None, icon=None, click_event=None):
@@ -105,8 +144,6 @@ class StyleButton(Button):
     def toggle_off(self):
         self.setStyleSheet("")
         self.button_toggled = False
-
-
 
 
 class Breadcrumb(Widget):
