@@ -61,17 +61,27 @@ class Theme:
         self.build()
 
     def black(self):
-        self.custom_theme(primary=Color.Dark().secondary,
+        self.custom_theme(primary=Color.Dark().primary,
                           secondary=Color.Dark().secondary,
                           window=Color.Dark().primary,
                           window_secondary=Color.Dark().secondary,
                           text="white",
                           highlight=Color.Dark().highlight,
-                          highlight_text="#DFDFDF",
+                          highlight_text=Color.Grey(500).color,
                           pressed=Color.Dark().pressed)
 
     def white(self):
         self.custom_theme(primary=Color.Light().secondary,
+                          secondary=Color.Light().secondary,
+                          window=Color.Light().primary,
+                          window_secondary=Color.Light().secondary,
+                          text="black",
+                          highlight=Color.Light().highlight,
+                          highlight_text="black",
+                          pressed=Color.Light().pressed)
+
+    def blue(self):
+        self.custom_theme(primary=Color.Blue().color,
                           secondary=Color.Light().secondary,
                           window=Color.Light().primary,
                           window_secondary=Color.Light().secondary,
@@ -88,4 +98,9 @@ class Theme:
     def change_text_color(self, widget, color):
         palette = widget.palette()
         palette.setColor(QPalette.Text, color)
+        widget.setPalette(palette)
+
+    def change_placeholder_text_color(self, widget, color):
+        palette = widget.palette()
+        palette.setColor(QPalette.PlaceholderText, color)
         widget.setPalette(palette)

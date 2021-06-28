@@ -51,9 +51,11 @@ class SideMenuDropArea(Widget):
             else:
                 app.theme.change_window_color(self, app.theme.highlight_color)
                 e.accept()
+        super().dragEnterEvent(e)
 
     def dragLeaveEvent(self, e):
         app.theme.change_window_color(self, app.theme.window_secondary_color)
+        super().dragLeaveEvent(e)
 
     def dropEvent(self, e):
         app.theme.change_window_color(self, app.theme.window_secondary_color)
@@ -64,6 +66,7 @@ class SideMenuDropArea(Widget):
             text = mime_data.button_text
             self.parent_list.insert(index, mime_data.button_object, text)
             mime_data.button_object.deleteLater()
+        super().dropEvent(e)
 
 
 class SideMenuListWidget(Widget):

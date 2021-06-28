@@ -10,6 +10,9 @@ class Client:
         self.previous_page = None
         self.button_ids = []
         self.profile_picture = Icon("assets/icons/user.png", 50, 50).create_round_image("assets/profile_picture.png")
+        self.threads = {
+            "editor": None
+        }
 
     def set_username(self, name):
         self.username = name

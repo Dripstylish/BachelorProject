@@ -69,7 +69,7 @@ class Dark:
 
 class Light:
     def __init__(self):
-        self.primary = "#2f3437"
-        self.secondary = "#373c3f"
+        self.primary = "#FFFFFF"
+        self.secondary = "#F5F5F5"
         self.highlight = "#454b4f"
         self.pressed = "#40464a"

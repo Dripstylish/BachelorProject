@@ -1,4 +1,5 @@
-from PySide6.QtGui import QPalette, QAction
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QPalette, QAction, QIcon
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QScrollArea, QFrame, QMenu
 
 from SecondBrain.Gui.Application import app
@@ -177,7 +178,7 @@ class AppBar(Widget):
         super().__init__(QBoxHorizontal(), [])
         self.setAutoFillBackground(True)
         self.setFixedHeight(50)
-        app.theme.change_window_color(self, app.theme.window_color)
+        app.theme.change_window_color(self, app.theme.primary_color)
 
         if left is not None:
             padding = Container()
@@ -207,10 +208,16 @@ class Container(Widget):
 
 
 class Button(QPushButton):
-    def __init__(self, text, icon=None, click_event=None):
-        super().__init__(text)
+    def __init__(self, text=None, icon=None, click_event=None):
+        super().__init__()
+        self.setAutoFillBackground(True)
+
+        if text is not None:
+            self.setText(text)
+
         if icon is not None:
-            self.setIcon(icon)
+            self.setIcon(QIcon(icon))
+            self.setIconSize(QSize(11, 11))
 
         if click_event is not None:
             self.clicked.connect(click_event)
