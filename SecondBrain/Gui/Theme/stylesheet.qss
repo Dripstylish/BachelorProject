@@ -1,3 +1,42 @@
+QComboBox {
+    background-color: @window;
+    border: none;
+    padding: 1px 0px 1px 3px;
+    padding-left: 15px;
+    min-width: 5em;
+    min-height: 32px;
+}
+
+QComboBox::hover {
+    background-color: @highlight;
+}
+
+QComboBox::drop-down {
+    border: none;
+    padding-right: 5px;
+}
+
+QComboBox::down-arrow {
+    image: url(@dropdown_icon);
+    width: 18px;
+    height: 18px;
+}
+
+QComboBox QAbstractItemView {
+    selection-background-color: @window;
+}
+
+QComboBox::item {
+    height: 24px;
+    padding: 5px;
+    color: @text;
+}
+
+QComboBox::item:selected {
+    color: @text;
+    background-color: @window_secondary;
+}
+
 QTextEdit {
     background-color: @window;
     border: none;

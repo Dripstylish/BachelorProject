@@ -102,6 +102,9 @@ class Widget(QWidget):
     def addStretch(self):
         self.layout.addStretch()
 
+    def addSeparator(self):
+        self.layout.addSpacerItem()
+
 class ScrollArea(QScrollArea):
     def __init__(self, layout=None, children=None, background=None, stretch_buttom=False):
         super().__init__()

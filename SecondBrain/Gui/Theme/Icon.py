@@ -1,5 +1,10 @@
 class Icon:
     def __init__(self, theme):
+        if theme.dark_mode:
+            self.icon_folder = "assets/icons/white"
+        else:
+            self.icon_folder = "assets/icons/black"
+
         self.fi_rr_add = None
         self.fi_rr_alarm_clock = None
         self.fi_rr_align_center = None
@@ -355,33 +360,30 @@ class Icon:
         self.fi_rr_zoom_in = None
         self.fi_rr_zoom_out = None
 
-        if theme.dark_mode:
-            self.icon_folder = "assets/icons/white"
-        else:
-            self.icon_folder = "assets/icons/black"
+        self.load_icons()
 
     def load_icons(self):
         self.fi_rr_add = self.icon_folder + "/fi-rr-add.svg"
         self.fi_rr_alarm_clock = self.icon_folder + "/fi-rr-alarm-clock.svg"
-        self.fi_rr_align_center = self.icon_folder + "/fi-rr-align_center.svg"
-        self.fi_rr_align_justify = self.icon_folder + "/fi-rr-align_justify.svg"
-        self.fi_rr_align_left = self.icon_folder + "/fi-rr-align_left.svg"
-        self.fi_rr_align_right = self.icon_folder + "/fi-rr-align_right.svg"
+        self.fi_rr_align_center = self.icon_folder + "/fi-rr-align-center.svg"
+        self.fi_rr_align_justify = self.icon_folder + "/fi-rr-align-justify.svg"
+        self.fi_rr_align_left = self.icon_folder + "/fi-rr-align-left.svg"
+        self.fi_rr_align_right = self.icon_folder + "/fi-rr-align-right.svg"
         self.fi_rr_ambulance = self.icon_folder + "/fi-rr-ambulance.svg"
-        self.fi_rr_angle_double_left = self.icon_folder + "/fi-rr-angle_double_left.svg"
-        self.fi_rr_angle_double_right = self.icon_folder + "/fi-rr-angle_double_right.svg"
-        self.fi_rr_angle_double_small_left = self.icon_folder + "/fi-rr-angle_double_small_left.svg"
-        self.fi_rr_angle_double_small_right = self.icon_folder + "/fi-rr-angle_double_small_right.svg"
-        self.fi_rr_angle_down = self.icon_folder + "/fi-rr-angle_down.svg"
-        self.fi_rr_angle_left = self.icon_folder + "/fi-rr-angle_left.svg"
-        self.fi_rr_angle_right = self.icon_folder + "/fi-rr-angle_right.svg"
-        self.fi_rr_angle_small_down = self.icon_folder + "/fi-rr-angle_small_down.svg"
-        self.fi_rr_angle_small_left = self.icon_folder + "/fi-rr-angle_small_left.svg"
-        self.fi_rr_angle_small_right = self.icon_folder + "/fi-rr-angle_small_right.svg"
-        self.fi_rr_angle_small_up = self.icon_folder + "/fi-rr-angle_small_up.svg"
-        self.fi_rr_angle_up = self.icon_folder + "/fi-rr-angle_up.svg"
-        self.fi_rr_apps_add = self.icon_folder + "/fi-rr-apps_add.svg"
-        self.fi_rr_apps_delete = self.icon_folder + "/fi-rr-apps_delete.svg"
+        self.fi_rr_angle_double_left = self.icon_folder + "/fi-rr-angle-double-left.svg"
+        self.fi_rr_angle_double_right = self.icon_folder + "/fi-rr-angle-double-right.svg"
+        self.fi_rr_angle_double_small_left = self.icon_folder + "/fi-rr-angle-double-small-left.svg"
+        self.fi_rr_angle_double_small_right = self.icon_folder + "/fi-rr-angle-double-small-right.svg"
+        self.fi_rr_angle_down = self.icon_folder + "/fi-rr-angle-down.svg"
+        self.fi_rr_angle_left = self.icon_folder + "/fi-rr-angle-left.svg"
+        self.fi_rr_angle_right = self.icon_folder + "/fi-rr-angle-right.svg"
+        self.fi_rr_angle_small_down = self.icon_folder + "/fi-rr-angle-small-down.svg"
+        self.fi_rr_angle_small_left = self.icon_folder + "/fi-rr-angle-small-left.svg"
+        self.fi_rr_angle_small_right = self.icon_folder + "/fi-rr-angle-small-right.svg"
+        self.fi_rr_angle_small_up = self.icon_folder + "/fi-rr-angle-small-up.svg"
+        self.fi_rr_angle_up = self.icon_folder + "/fi-rr-angle-up.svg"
+        self.fi_rr_apps_add = self.icon_folder + "/fi-rr-apps-add.svg"
+        self.fi_rr_apps_delete = self.icon_folder + "/fi-rr-apps-delete.svg"
         self.fi_rr_apps_sort = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_apps = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_archive = self.icon_folder + "/fi-rr-REPLACE.svg"
@@ -550,8 +552,8 @@ class Icon:
         self.fi_rr_line_width = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_link = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_lipstick = self.icon_folder + "/fi-rr-REPLACE.svg"
-        self.fi_rr_list_check = self.icon_folder + "/fi-rr-REPLACE.svg"
-        self.fi_rr_list = self.icon_folder + "/fi-rr-REPLACE.svg"
+        self.fi_rr_list_check = self.icon_folder + "/fi-rr-list-check.svg"
+        self.fi_rr_list = self.icon_folder + "/fi-rr-list.svg"
         self.fi_rr_location_alt = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_lock_alt = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_lock = self.icon_folder + "/fi-rr-REPLACE.svg"
@@ -599,7 +601,7 @@ class Icon:
         self.fi_rr_pound = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_power = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_presentation = self.icon_folder + "/fi-rr-REPLACE.svg"
-        self.fi_rr_print = self.icon_folder + "/fi-rr-REPLACE.svg"
+        self.fi_rr_print = self.icon_folder + "/fi-rr-print.svg"
         self.fi_rr_protractor = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_pulse = self.icon_folder + "/fi-rr-REPLACE.svg"
         self.fi_rr_quote_right = self.icon_folder + "/fi-rr-REPLACE.svg"

@@ -15,4 +15,3 @@ class App:
 
 app = App()
 icon = Icon(app.theme)
-icon.load_icons()

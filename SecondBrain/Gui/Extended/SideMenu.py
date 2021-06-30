@@ -183,7 +183,7 @@ class DraggableSideMenuButton(SideMenuButton):
         if page is not None:
             self.page = page
         else:
-            self.page = Page(self.text())
+            self.page = Page(self, self.text())
 
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.button_held_check())
@@ -301,7 +301,7 @@ class DraggableSideMenuButton(SideMenuButton):
     def load(self, load_file):
         self.id = load_file["id"]
         self.setText(load_file["text"])
-        new_page = Page("")
+        new_page = Page(self, "")
         new_page.load(load_file["page"])
         self.page = new_page
 

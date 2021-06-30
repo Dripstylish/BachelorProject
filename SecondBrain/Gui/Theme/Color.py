@@ -71,5 +71,5 @@ class Light:
     def __init__(self):
         self.primary = "#FFFFFF"
         self.secondary = "#F5F5F5"
-        self.highlight = "#454b4f"
-        self.pressed = "#40464a"
+        self.highlight = Grey(300).color
+        self.pressed = Grey(400).color

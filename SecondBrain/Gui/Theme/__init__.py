@@ -1,6 +1,8 @@
 from PySide6.QtGui import QPalette
 
 from SecondBrain.Gui.Theme import Color
+from SecondBrain.Gui.Theme.Icon import Icon
+
 
 class Theme:
     def __init__(self, app, theme=None):
@@ -18,6 +20,8 @@ class Theme:
             self.dark_mode = True
         else:
             self.dark_mode = False
+
+        self.icon = Icon(self)
 
         self.stylesheet = None
         if theme is None:
@@ -40,6 +44,7 @@ class Theme:
             "@highlight_text": self.highlight_text_color,
             "@highlight": self.highlight_color,
             "@pressed": self.pressed_color,
+            "@dropdown_icon": self.icon.fi_rr_angle_small_down
         }
 
         with open("Gui/Theme/stylesheet.qss", "r") as f:
@@ -71,13 +76,13 @@ class Theme:
                           pressed=Color.Dark().pressed)
 
     def white(self):
-        self.custom_theme(primary=Color.Light().secondary,
+        self.custom_theme(primary=Color.Light().primary,
                           secondary=Color.Light().secondary,
                           window=Color.Light().primary,
                           window_secondary=Color.Light().secondary,
-                          text="black",
+                          text=Color.Grey(900).color,
                           highlight=Color.Light().highlight,
-                          highlight_text="black",
+                          highlight_text=Color.Grey(700).color,
                           pressed=Color.Light().pressed)
 
     def blue(self):

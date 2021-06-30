@@ -43,12 +43,12 @@ class Home(QMainWindow):
                 side_menu_buttons.append(new_button)
         else:
             save_file.save_file["side_menu"] = {}
-            current_page = Page("Untitled")
+            button = DraggableSideMenuButton("Untitled")
+            current_page = Page(button, "Untitled")
+            button.page = current_page
             client.set_current_page(current_page)
-            button = DraggableSideMenuButton(current_page.page_title, page=current_page)
             button.save()
             side_menu_buttons = [button]
-
 
         # create breadcrumbs
         self.breadcrumb = Breadcrumb()
