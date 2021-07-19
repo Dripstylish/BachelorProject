@@ -1,0 +1,114 @@
+QComboBox {
+    background-color: @window;
+    border: none;
+    padding: 1px 0px 1px 3px;
+    padding-left: 15px;
+    min-width: 5em;
+    min-height: 32px;
+}
+
+QComboBox::hover {
+    background-color: @highlight;
+}
+
+QComboBox::drop-down {
+    border: none;
+    padding-right: 5px;
+}
+
+QComboBox::down-arrow {
+    image: url(@dropdown_icon);
+    width: 18px;
+    height: 18px;
+}
+
+QComboBox QAbstractItemView {
+    selection-background-color: @window;
+}
+
+QComboBox::item {
+    height: 24px;
+    padding: 5px;
+    color: @text;
+}
+
+QComboBox::item:selected {
+    color: @text;
+    background-color: @window_secondary;
+}
+
+QTextEdit {
+    background-color: @window;
+    border: none;
+}
+
+BreadcrumbButton {
+    font-weight: bold;
+    text-align: center left;
+    border: none;
+}
+
+QLineEdit {
+    background: @window_secondary;
+    height: 34px;
+    margin: 5px;
+}
+
+QListWidget {
+    border: none;
+}
+
+QMenu {
+    background-color: @window_secondary;
+}
+
+QMenu::item {
+    background-color: @window_secondary;
+    color: @text;
+}
+
+QMenu::item:selected {
+    background-color: @highlight;
+    color: @text;
+}
+
+QMenu::item:disabled {
+    color: @window;
+}
+
+QPushButton {
+    color: @text;
+    height: 34px;
+    min-height: 34px;
+    max-height: 34px;
+    text-align: center center;
+}
+
+QPushButton:hover {
+    background-color: @highlight;
+}
+
+QPushButton:pressed {
+    background-color: @pressed;
+}
+
+Button {
+    font-weight: bold;
+    border: none;
+}
+
+SideMenuButton {
+    font-weight: bold;
+    border: none;
+    text-align: center left;
+    padding-left: 15px;
+}
+
+ProfileButton {
+    font-size: 20px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
+    text-align: center left;
+    padding-left: 15px;
+}
