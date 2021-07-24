@@ -188,13 +188,13 @@ class TextEditorStylizer(Widget):
     def style_bullet_points(self):
         if self.bullet_button.button_toggled:
             self.editor.textCursor().currentList().remove(self.editor.textCursor().block())
-            format = self.editor.textCursor().block().blockFormat()
-            format.setIndent(0)
-            self.editor.textCursor().setBlockFormat(format)
+            new_format = self.editor.textCursor().block().blockFormat()
+            new_format.setIndent(0)
+            self.editor.textCursor().setBlockFormat(new_format)
         else:
-            listFormat = QTextListFormat()
-            listFormat.setStyle(QTextListFormat.ListDisc)
-            self.editor.textCursor().createList(listFormat)
+            list_format = QTextListFormat()
+            list_format.setStyle(QTextListFormat.ListDisc)
+            self.editor.textCursor().createList(list_format)
 
     def save(self):
         self.editor.save()

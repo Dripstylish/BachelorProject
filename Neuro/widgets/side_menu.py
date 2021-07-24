@@ -302,7 +302,7 @@ class DraggableSideMenuButton(SideMenuButton):
         self.save()
 
     def save(self):
-        print("save button")
+        print("not implemented save button")
         button_dict = {
             "id": self.id,
             "text": self.text(),
@@ -349,9 +349,8 @@ class SideMenuButtonRenameDialog(QDialog):
 
     def rename(self):
         self.button.setText(self.name_box.text())
-        self.button.parent.title = self.name_box.text()
+        self.button.parent.name = self.name_box.text()
         self.button.portal.page_subscription.push_notification()
-        self.button.parent.save()
         self.close()
 
     def cancel(self):

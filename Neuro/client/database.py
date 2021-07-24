@@ -44,7 +44,7 @@ def delete_portal(portal_name: str):
 def get_all_notebooks():
     return db.Notebooks().records
 
-def get_last_id():
+def get_last_notebook_id():
     id_list = list(db.Notebooks().records.keys())
     if id_list:
         return id_list[-1]
@@ -64,5 +64,38 @@ def delete_notebook(notebook_id: str):
     record_id = db.Notebooks().find_ids({"id": notebook_id})[0]
     db.Notebooks().delete(record_id)
 
-def add_page(notebook, page_dict):
-    pass
+def get_all_notebook_pages(notebook_id: str):
+    if get_notebook(notebook_id):
+        return get_notebook(notebook_id)[0]["pages"]
+    else:
+        return {}
+
+def get_notebook_page(notebook_id: str, page_id: str):
+    notebook = get_notebook(notebook_id)[0]
+    for page_key in notebook["pages"].keys():
+        if notebook["pages"][page_key]["page_id"] == page_id:
+            return [page_key, notebook["pages"][page_key]]
+    else:
+        return []
+
+def add_notebook_page(notebook_id: str, page_dict: dict):
+    notebook = get_notebook(notebook_id)
+    index = str(int(get_last_notebook_page_id(notebook_id)) + 1)
+    notebook["pages"][index] = page_dict
+    update_notebook(notebook_id, notebook)
+
+def delete_notebook_page(notebook_id: str, page_id: str):
+    notebook = get_notebook(notebook_id)[0]
+    for page_key in notebook["pages"].keys():
+        if notebook["pages"][page_key]["page_id"] == page_id:
+            notebook["pages"].pop(page_key)
+            update_notebook(notebook_id, notebook)
+            return
+
+def get_last_notebook_page_id(notebook_id: str):
+    notebook = get_notebook(notebook_id)
+    id_list = list(notebook[0]["pages"].keys())
+    if id_list:
+        return id_list[-1]
+    else:
+        return -1

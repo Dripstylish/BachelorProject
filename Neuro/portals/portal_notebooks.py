@@ -1,10 +1,10 @@
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QLabel
 
-from Neuro.client import client
 import Neuro.client.database as db
-from Neuro.portals.portal_notebook import NotebookPortal
-from Neuro.widgets.page import SettingsPage, Page
+from Neuro.client import client
+from Neuro.portals.portal_notebook import NotebookPortal, NotebookPage
+from Neuro.widgets.page import SettingsPage
 from Neuro.widgets.portal import Portal
 from Neuro.widgets.side_menu import SideMenu, SideMenuButton, DraggableSideMenuButton
 from PySide6Extended.core import app
@@ -37,7 +37,7 @@ class NotebooksPortal(Portal):
         if db.get_all_notebooks():
             side_menu_buttons = []
             for notebook in dict(db.get_all_notebooks()).values():
-                loaded_notebook = Notebook(notebook["title"], notebook["id"], self)
+                loaded_notebook = Notebook(notebook["title"], notebook["id"], self, notebook["pages"])
                 loaded_notebook.save()
                 side_menu_buttons.append(loaded_notebook.button)
         else:
@@ -74,11 +74,9 @@ class NotebooksPortal(Portal):
 
 class Notebook:
     def __init__(self, text: str, id: str = None, portal: NotebooksPortal = None, pages: dict = None):
-        self.title = text
+        self.name = text
 
         self.portal = portal
-
-        self.button = NotebookButton(text, portal, self)
 
         if pages:
             self.pages = pages
@@ -88,14 +86,19 @@ class Notebook:
         if id is not None:
             self.id = id
         else:
-            self.id = str(int(db.get_last_id()) + 1)
+            self.id = str(int(db.get_last_notebook_id()) + 1)
 
-    def create_new_page(self, title: str):
-        return Page(title, self.button)
+        self.button = NotebookButton(text, portal, self)
+
+    def check_if_page_exists(self, page):
+        for notebook_page in self.pages.values():
+            if notebook_page["page_id"] == page.id:
+                return True
+        return False
 
     def save(self):
         notebook_dict = {
-            "title": self.title,
+            "title": self.name,
             "id": self.id,
             "pages": self.pages
         }
@@ -115,7 +118,7 @@ class NotebookButton(DraggableSideMenuButton):
         super().__init__(text, click_event=self.enter_notebook)
 
     def enter_notebook(self):
-        self.portal.swap_portal(NotebookPortal(self.text()))
+        self.portal.swap_portal(NotebookPortal(self.text(), self.parent))
 
     def save(self):
         self.parent.save()
@@ -123,4 +126,3 @@ class NotebookButton(DraggableSideMenuButton):
     def delete(self):
         self.parent.delete()
         self.parentWidget().removeWidget(self)
-
