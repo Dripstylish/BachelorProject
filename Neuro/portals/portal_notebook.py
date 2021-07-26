@@ -5,6 +5,7 @@ import Neuro.client.database as db
 from Neuro.client import client
 from Neuro.widgets.page import SettingsPage, Page
 from Neuro.widgets.portal import Portal
+from Neuro.widgets.search_field import SearchField
 from Neuro.widgets.side_menu import SideMenuButton, SideMenu, DraggableSideMenuButton
 from PySide6Extended.core import app
 from PySide6Extended.widget import ProfileButton, Container, AppBar, Scaffold
@@ -30,9 +31,13 @@ class NotebookPortal(Portal):
         add_page_button = SideMenuButton("New Page", QIcon(icon.fi_rr_plus_small), click_event=self.create_new_page)
         bottom_container = Container(children=[add_page_button])
 
+        # create search field
+        self.search_field = NotebookSearchField()
+
         # create app bar
         self.appbar = AppBar(
-            left=[self.breadcrumb]
+            left=[self.breadcrumb],
+            right=[self.search_field]
         )
 
         # load notebook pages
@@ -61,7 +66,12 @@ class NotebookPortal(Portal):
             page=self.main_page
         )
 
-        self.main_page.addWidget(QLabel("Notebook Page"))
+        # swap to first page in notebook
+        side_menu_buttons[0].swap_page()
+
+        # instantiate search field
+        self.search_field.set_search_list(self.get_notebook_page_buttons())
+        print(self.get_notebook_page_buttons())
 
     def swap_page_settings(self):
         page_settings = SettingsPage(self.profile_button, self.swap_page_settings)
@@ -80,6 +90,14 @@ class NotebookPortal(Portal):
         page = NotebookPage("New Page", self, self.parent_notebook)
         page.save()
         self.side_menu.list_widget.append(page.button, page.button.text())
+
+    def get_notebook_page_buttons(self):
+        notebook_page_buttons = []
+        for child in self.side_menu.list_widget.children:
+            if type(child) == NotebookPageButton:
+                notebook_page_buttons.append(child)
+        return notebook_page_buttons
+
 
 class NotebookPage(Page):
     def __init__(self, title, portal, parent, id=None):
@@ -146,3 +164,28 @@ class NotebookPageButton(DraggableSideMenuButton):
 
     def swap_page(self):
         self.portal.swap_page(self.parent)
+
+
+class NotebookSearchField(SearchField):
+    def __init__(self):
+        super().__init__()
+
+    def search(self):
+        search_text = self.search_field.text().lower()
+
+        result_list = []
+        for button in self.search_list:
+            if search_text in button.text().lower():
+                result_list.append(self.copy_notebook_page(button))
+                continue
+            page_text = button.parent.editor.main_window.toPlainText().lower()
+            if search_text in page_text:
+                result_list.append(self.copy_notebook_page(button))
+
+        if not result_list:
+            result_list.append(QLabel("No matching notebook pages found."))
+
+        self.get_pop_up(result_list)
+
+    def copy_notebook_page(self, notebook_page):
+        return NotebookPageButton(notebook_page.text(), notebook_page.portal, notebook_page.parent)

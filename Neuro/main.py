@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow
 
 from Neuro.client.setup import setup_app
 from Neuro.portals.portal_home import HomePortal
+from Neuro.portals.portal_notebooks import NotebooksPortal
 from PySide6Extended.core import app
 from PySide6Extended.core.application import Builder
 
@@ -14,7 +15,8 @@ class Home(QMainWindow):
 
         setup_app()
 
-        self.portal = HomePortal()
+        #self.portal = HomePortal()
+        self.portal = NotebooksPortal()
         self.root = self.portal.root
         Builder(self, self.root)
 

@@ -3,9 +3,10 @@ from PySide6.QtWidgets import QLabel
 
 import Neuro.client.database as db
 from Neuro.client import client
-from Neuro.portals.portal_notebook import NotebookPortal, NotebookPage
+from Neuro.portals.portal_notebook import NotebookPortal
 from Neuro.widgets.page import SettingsPage
 from Neuro.widgets.portal import Portal
+from Neuro.widgets.search_field import SearchField
 from Neuro.widgets.side_menu import SideMenu, SideMenuButton, DraggableSideMenuButton
 from PySide6Extended.core import app
 from PySide6Extended.widget import ProfileButton, Container, AppBar, Scaffold
